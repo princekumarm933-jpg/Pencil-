@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGN Bridge — Modular</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</head>
+<body>
+
+<div class="app" id="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="topbar">
+            <div class="logo">PGN BRIDGE</div>
+            <div class="profile-mini" id="profileMini">U</div>
+        </div>
+
+        <div class="search">
+            <input id="searchInput" placeholder="Search chats...">
+        </div>
+
+        <div class="tabs">
+            <button class="active" data-tab="chats">Chats</button>
+            <button data-tab="contacts">Contacts</button>
+            <button data-tab="calls">Calls</button>
+        </div>
+
+        <div class="list" id="list"></div>
+    </aside>
+
+    <!-- MAIN CHAT -->
+    <main class="main">
+        <div class="empty" id="emptyState">
+            <div>
+                <h2>PGN Bridge</h2>
+                <p>Select a contact to start chatting</p>
+            </div>
+        </div>
+
+        <div id="chatView" style="display:none;height:100%;flex-direction:column;">
+            <div class="chat-header">
+                <button class="mobile-back" id="btnBack">←</button>
+                <div class="avatar" id="chatAvatar">U</div>
+                <div class="chat-info">
+                    <div class="chat-name" id="chatName">User</div>
+                    <div class="chat-status" id="chatStatus">offline</div>
+                </div>
+                <button class="header-btn" id="btnVoiceCall">📞</button>
+                <button class="header-btn" id="btnVideoCall">📹</button>
+            </div>
+
+            <div class="messages" id="messages"></div>
+            <div class="typing" id="typing"></div>
+
+            <div class="composer">
+                <button class="icon-btn" id="btnAttach">📎</button>
+                <input id="messageInput" placeholder="Message...">
+                <button class="send-btn" id="btnSend">➤</button>
+            </div>
+            <input type="file" id="fileInput" accept="image/*,video/*" style="display:none">
+        </div>
+    </main>
+</div>
+
+<!-- CALL SCREEN -->
+<div class="call-screen" id="callScreen">
+    <div class="call-top">
+        <span id="callTypeText">Audio Call</span>
+        <span id="callTimer">00:00</span>
+    </div>
+    <div class="call-user" id="audioCallUser">
+        <div class="call-avatar" id="callAvatar">U</div>
+        <h2 id="callName">User</h2>
+        <div class="call-state" id="callState">Calling...</div>
+    </div>
+    <div class="call-videos" id="callVideos">
+        <video class="remote-video" id="remoteVideo" autoplay playsinline></video>
+        <video class="local-video" id="localVideo" autoplay muted playsinline></video>
+    </div>
+    <div class="call-controls">
+        <button class="call-control" id="btnMute">🎤</button>
+        <button class="call-control" id="btnCamera">📹</button>
+        <button class="call-control call-end" id="btnEndCall">☎</button>
+    </div>
+</div>
+
+<!-- INCOMING SCREEN -->
+<div class="incoming" id="incomingScreen">
+    <div class="incoming-box">
+        <div class="incoming-avatar" id="incomingAvatar">U</div>
+        <h2 id="incomingName">Incoming Call</h2>
+        <p class="call-state" id="incomingType">Incoming Audio Call</p>
+        <div class="incoming-buttons">
+            <button class="reject" id="btnRejectCall">✕</button>
+            <button class="accept" id="btnAcceptCall">✓</button>
+        </div>
+    </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="profile-panel" id="profilePanel">
+    <div class="profile-card">
+        <div class="profile-big" id="profileBig">U</div>
+        <h2 style="text-align:center" id="profileName">User</h2>
+        <p id="profileId">ID: --</p>
+        <p id="profileState">State: --</p>
+        <button class="close-btn" id="btnCloseProfile">Close</button>
+    </div>
+</div>
+
+<!-- JAVASCRIPT MODULES -->
+<script src="utils.js"></script>
+<script src="storage.js"></script>
+<script src="contacts.js"></script>
+<script src="chat.js"></script>
+<script src="calling.js"></script>
+<script src="buttons.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
+  
