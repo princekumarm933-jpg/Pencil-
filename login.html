@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Identity Registration</title>
+    <style>
+        body { font-family: monospace; background: #121212; color: #00ff00; padding: 20px; }
+        .box { max-width: 400px; margin: 40px auto; background: #1e1e1e; padding: 20px; border-radius: 8px; border: 1px solid #333; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; background: #2a2a2a; color: white; border: 1px solid #555; }
+        button { background: #00ff00; color: #121212; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h3>Create Permanent ID</h3>
+    <label>Name:</label>
+    <input type="text" id="userName" placeholder="Enter Name">
+    
+    <label>State Code (2 Letters):</label>
+    <input type="text" id="userState" placeholder="Enter State (e.g., TG, BR)" maxlength="2">
+    
+    <button onclick="saveAndEnter()">Generate ID & Enter</button>
+</div>
+
+<script>
+    // यदि आईडी पहले से मौजूद है, तो तुरंत मुख्य वेबसाइट पर भेजें
+    if (localStorage.getItem("permanent_device_identity")) {
+        window.location.replace("index.html");
+    }
+
+    function createCustomUserID(name, state, country = "IN") {
+        const cleanName = name.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 6);
+        const cleanState = state.toUpperCase().slice(0, 2);
+        const randomHex = Math.random().toString(16).substring(2, 6).toUpperCase();
+        return `${country}-${cleanState}-${cleanName}-${randomHex}`;
+    }
+
+    function saveAndEnter() {
+        const name = document.getElementById("userName").value.trim();
+        const state = document.getElementById("userState").value.trim();
+
+        if (!name || !state) {
+            alert("Error: All fields are mandatory.");
+            return;
+        }
+
+        const id = createCustomUserID(name, state);
+        const profile = { id: id, name: name, state: state, timestamp: Date.now() };
+        
+        localStorage.setItem("permanent_device_identity", JSON.stringify(profile));
+        window.location.replace("index.html");
+    }
+</script>
+
+</body>
+</html>
